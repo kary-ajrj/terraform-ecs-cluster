@@ -20,7 +20,7 @@ resource "aws_route_table" "routeTable" {
 
 resource "aws_route_table_association" "routeTableAssociation" {
   route_table_id = aws_route_table.routeTable.id
-  subnet_id = aws_subnet.ecs_public_subnet.id
+  subnet_id      = aws_subnet.ecs_public_subnet.id
 }
 
 resource "aws_subnet" "ecs_public_subnet" {
@@ -39,12 +39,6 @@ resource "aws_security_group" "ecs_security_group" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  ingress {
-    from_port   = 22
-    protocol    = "tcp"
-    to_port     = 22
-    cidr_blocks = ["0.0.0.0/0"]
-  }
   egress {
     from_port   = 0
     protocol    = "-1"
@@ -100,7 +94,7 @@ resource "aws_autoscaling_group" "auto_scale" {
   min_size             = 1
   launch_configuration = aws_launch_configuration.launch_config.name
   vpc_zone_identifier  = [aws_subnet.ecs_public_subnet.id]
-  #  health_check_type = "EC2"
+  health_check_type    = "EC2"
   desired_capacity     = 1
   termination_policies = [
     "OldestInstance"
