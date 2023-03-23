@@ -38,13 +38,6 @@ resource "aws_security_group" "ecs_security_group" {
     to_port     = 443
     cidr_blocks = ["0.0.0.0/0"]
   }
-
-  egress {
-    from_port   = 0
-    protocol    = "-1"
-    to_port     = 0
-    cidr_blocks = ["0.0.0.0/0"]
-  }
 }
 
 data "aws_iam_policy_document" "ecs_agent" {
@@ -106,19 +99,19 @@ resource "aws_autoscaling_group" "auto_scale" {
   }
 }
 
-#resource "aws_ecs_capacity_provider" "capacity_provider" {
-#  name = "capacity_provider_example"
-#  auto_scaling_group_provider {
-#    auto_scaling_group_arn = aws_autoscaling_group.auto_scale.arn
-#  }
-#}
-#
-#resource "aws_ecs_cluster_capacity_providers" "capacity_provider" {
-#  cluster_name = aws_ecs_cluster.ecs_cluster.name
-#  capacity_providers = [aws_ecs_capacity_provider.capacity_provider.name]
-#  default_capacity_provider_strategy {
-#    base = 1
-#    weight = 100
-#    capacity_provider = aws_ecs_capacity_provider.capacity_provider.name
-#  }
-#}
+resource "aws_ecs_capacity_provider" "capacity_provider" {
+  name = "capacity_provider_example"
+  auto_scaling_group_provider {
+    auto_scaling_group_arn = aws_autoscaling_group.auto_scale.arn
+  }
+}
+
+resource "aws_ecs_cluster_capacity_providers" "capacity_provider" {
+  cluster_name = aws_ecs_cluster.ecs_cluster.name
+  capacity_providers = [aws_ecs_capacity_provider.capacity_provider.name]
+  default_capacity_provider_strategy {
+    base = 1
+    weight = 100
+    capacity_provider = aws_ecs_capacity_provider.capacity_provider.name
+  }
+}
