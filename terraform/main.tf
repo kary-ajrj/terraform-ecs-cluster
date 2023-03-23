@@ -10,12 +10,11 @@ resource "aws_ecs_task_definition" "task_example" {
   family                = "service"
   container_definitions = jsonencode([
     {
-      name         = "hello"
-      image        = aws_ecr_repository.ecr_example.repository_url
-      memory       = 985
-      cpu          = 512
-      essential    = true
-      portMappings = [
+      name              = "hello"
+      image             = aws_ecr_repository.ecr_example.repository_url
+      memoryReservation = 985
+      essential         = true
+      portMappings      = [
         {
           containerPort = 3000
           hostPort      = 3000
@@ -25,9 +24,6 @@ resource "aws_ecs_task_definition" "task_example" {
   ])
   requires_compatibilities = ["EC2"]
   network_mode             = "awsvpc"
-  memory                   = 985
-  cpu                      = 512
-
 }
 
 resource "aws_ecs_service" "service_example" {
