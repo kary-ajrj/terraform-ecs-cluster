@@ -15,6 +15,11 @@ resource "aws_route_table_association" "routeTableAssociation" {
   subnet_id      = aws_subnet.ecs_public_subnet.id
 }
 
+resource "aws_route_table_association" "secondRouteTableAssociation" {
+  route_table_id = aws_route_table.routeTable.id
+  subnet_id      = aws_subnet.ecs_public_subnet_two.id
+}
+
 resource "aws_subnet" "ecs_public_subnet" {
   vpc_id                  = aws_vpc.ecs_vpc.id
   cidr_block              = "10.0.1.0/24"
@@ -22,12 +27,19 @@ resource "aws_subnet" "ecs_public_subnet" {
   map_public_ip_on_launch = true
 }
 
+resource "aws_subnet" "ecs_public_subnet_two" {
+  vpc_id                  = aws_vpc.ecs_vpc.id
+  cidr_block              = "10.0.2.0/24"
+  availability_zone       = "us-west-2b"
+  map_public_ip_on_launch = true
+}
+
 resource "aws_security_group" "ecs_security_group" {
   vpc_id = aws_vpc.ecs_vpc.id
   ingress {
-    from_port   = 443
+    from_port   = 3000
     protocol    = "tcp"
-    to_port     = 443
+    to_port     = 3000
     cidr_blocks = ["0.0.0.0/0"]
   }
 

@@ -24,6 +24,11 @@ resource "aws_ecs_service" "service_example" {
   task_definition = aws_ecs_task_definition.task_example.arn
   launch_type     = "EC2"
   desired_count   = 1
+  load_balancer {
+    container_name   = "hello"
+    container_port   = 3000
+    target_group_arn = aws_lb_target_group.ecs_alb_target_group.arn
+  }
   network_configuration {
     subnets         = [aws_subnet.ecs_public_subnet.id]
     security_groups = [aws_security_group.ecs_security_group.id]
