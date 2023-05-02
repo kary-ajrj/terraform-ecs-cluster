@@ -1,15 +1,19 @@
+module "networking" {
+  source = "../network"
+}
+
 resource "aws_lb" "ecs_alb" {
   name               = "ecs-alb"
   load_balancer_type = "application"
   security_groups    = [aws_security_group.alb_security_group.id]
-  subnets            = [aws_subnet.ecs_public_subnet.id, aws_subnet.ecs_public_subnet_two.id]
+  subnets            = [module.networking.public_subnet_id, module.networking.second_public_subnet_id]
 }
 
 resource "aws_lb_target_group" "ecs_alb_target_group" {
   name        = "ecs-alb-target-group"
   port        = 3000
   protocol    = "HTTP"
-  vpc_id      = aws_vpc.ecs_vpc.id
+  vpc_id      = module.networking.vpc_id
   target_type = "ip"
 }
 
@@ -24,7 +28,7 @@ resource "aws_lb_listener" "alb_listener" {
 }
 
 resource "aws_security_group" "alb_security_group" {
-  vpc_id = aws_vpc.ecs_vpc.id
+  vpc_id = module.networking.vpc_id
   ingress {
     from_port   = 3000
     protocol    = "tcp"
