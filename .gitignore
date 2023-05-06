@@ -35,3 +35,4 @@ terraform/graph.png
 terraform/.idea/
 node-docker-ecs/.idea/
 node-docker-ecs/node_modules/
+.idea
