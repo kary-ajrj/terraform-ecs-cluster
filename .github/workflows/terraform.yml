@@ -25,7 +25,7 @@ jobs:
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
       run:
-        working-directory: ../../terraform/ecs-qa
+        working-directory: /terraform/ecs-qa
         shell: bash
 
     steps:
