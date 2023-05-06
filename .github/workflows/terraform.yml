@@ -23,8 +23,8 @@ jobs:
     environment: qa
 
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
-    defaults:
-    - run: ls
+#    defaults:
+#      run:
 #        working-directory: ./terraform/ecs-qa
 #        shell: bash
 
