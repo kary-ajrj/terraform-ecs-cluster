@@ -6,6 +6,7 @@
 # Documentation for `hashicorp/setup-terraform` is located here: https://github.com/hashicorp/setup-terraform
 
 name: 'Terraform'
+on: workflow_dispatch
 #on:
 #  push:
 #    branches: [ "main" ]
