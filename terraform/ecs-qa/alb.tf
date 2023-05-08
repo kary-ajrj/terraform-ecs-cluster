@@ -6,7 +6,7 @@ resource "aws_lb" "ecs_alb_qa" {
 }
 
 resource "aws_lb_target_group" "ecs_alb_target_group_qa" {
-  name        = "ecs-alb-target-group"
+  name        = "ecs-alb-target-group-qa"
   port        = 3000
   protocol    = "HTTP"
   vpc_id      = module.networking.vpc_id
