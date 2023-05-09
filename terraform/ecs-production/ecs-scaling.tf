@@ -4,17 +4,7 @@ resource "aws_autoscaling_group" "auto_scale" {
   launch_template {
     id = aws_launch_template.launch_config.id
   }
-  vpc_zone_identifier  = [module.networking.first_public_subnet_id,module.networking.second_public_subnet_id]
-#  health_check_type    = "EC2"
-#  desired_capacity     = 1
-#  termination_policies = [
-#    "OldestInstance"
-#  ]
-#  default_cooldown          = 30
-#  health_check_grace_period = 30
-#  lifecycle {
-#    create_before_destroy = true
-#  }
+  vpc_zone_identifier  = [module.networking.first_public_subnet_id]
 }
 
 resource "aws_ecs_capacity_provider" "capacity_provider" {

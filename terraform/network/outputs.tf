@@ -15,5 +15,5 @@ output "second_public_subnet_id" {
 }
 
 output "iam_name" {
-  value = aws_iam_instance_profile.ecs_agent.name
+  value = aws_iam_instance_profile.ecs_agent_profile.name
 }
