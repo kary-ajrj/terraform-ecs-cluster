@@ -1,12 +1,11 @@
 resource "aws_lb" "ecs_alb_qa" {
   name               = "ecs-alb"
-  load_balancer_type = "application"
   security_groups    = [aws_security_group.alb_security_group_qa.id]
-  subnets            = [module.networking.public_subnet_id, module.networking.second_public_subnet_id]
+  subnets            = [module.networking.first_public_subnet_id, module.networking.second_public_subnet_id]
 }
 
 resource "aws_lb_target_group" "ecs_alb_target_group_qa" {
-  name        = "ecs-alb-target-group-qa"
+  name        = "ecs-alb-target-group"
   port        = 3000
   protocol    = "HTTP"
   vpc_id      = module.networking.vpc_id

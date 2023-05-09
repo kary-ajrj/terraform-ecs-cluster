@@ -2,8 +2,8 @@ output "vpc_id" {
   value = aws_vpc.ecs_vpc.id
 }
 
-output "public_subnet_id" {
-  value = aws_subnet.ecs_public_subnet.id
+output "first_public_subnet_id" {
+  value = aws_subnet.ecs_public_subnet_one.id
 }
 
 output "security_group_id" {

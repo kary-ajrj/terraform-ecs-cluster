@@ -50,7 +50,7 @@ resource "aws_ecs_service" "service_example" {
     target_group_arn = aws_lb_target_group.ecs_alb_target_group.arn
   }
   network_configuration {
-    subnets         = [module.networking.public_subnet_id]
+    subnets         = [module.networking.first_public_subnet_id]
     security_groups = [module.networking.security_group_id]
   }
 }

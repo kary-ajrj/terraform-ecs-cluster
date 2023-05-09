@@ -2,7 +2,7 @@ resource "aws_autoscaling_group" "auto_scale" {
   max_size             = 1
   min_size             = 1
   launch_configuration = aws_launch_configuration.launch_config.name
-  vpc_zone_identifier  = [module.networking.public_subnet_id]
+  vpc_zone_identifier  = [module.networking.first_public_subnet_id]
   health_check_type    = "EC2"
   desired_capacity     = 1
   termination_policies = [

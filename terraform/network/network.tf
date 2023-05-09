@@ -6,7 +6,7 @@ resource "aws_vpc" "ecs_vpc" {
   }
 }
 
-resource "aws_subnet" "ecs_public_subnet" {
+resource "aws_subnet" "ecs_public_subnet_one" {
   vpc_id                  = aws_vpc.ecs_vpc.id
   cidr_block              = "10.0.1.0/24"
   availability_zone       = "us-west-2a"
@@ -32,9 +32,9 @@ resource "aws_route_table" "routeTable" {
   }
 }
 
-resource "aws_route_table_association" "routeTableAssociation" {
+resource "aws_route_table_association" "firstRouteTableAssociation" {
   route_table_id = aws_route_table.routeTable.id
-  subnet_id      = aws_subnet.ecs_public_subnet.id
+  subnet_id      = aws_subnet.ecs_public_subnet_one.id
 }
 
 resource "aws_route_table_association" "secondRouteTableAssociation" {
