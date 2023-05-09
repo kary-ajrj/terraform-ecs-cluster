@@ -5,7 +5,3 @@ module "networking" {
 module "ecr" {
   source = "../ecr"
 }
-
-module "s3" {
-  source = "../s3"
-}

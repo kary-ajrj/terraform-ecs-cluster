@@ -37,3 +37,4 @@ node-docker-ecs/.idea/
 node-docker-ecs/node_modules/
 .idea
 terraform/ecs-qa/.terraform.lock.hcl
+terraform/ecs-production/.terraform.lock.hcl

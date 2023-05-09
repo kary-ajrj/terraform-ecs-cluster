@@ -1,7 +1,3 @@
-module "networking" {
-  source = "../network"
-}
-
 resource "aws_lb" "ecs_alb" {
   name               = "ecs-alb"
   load_balancer_type = "application"

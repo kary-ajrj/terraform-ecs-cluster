@@ -1,20 +1,10 @@
 resource "aws_autoscaling_group" "auto_scale" {
-  max_size             = 2
+  max_size             = 1
   min_size             = 1
   launch_template {
-    id = aws_launch_template.launch_config.id
+    id = aws_launch_template.launch_config_qa.id
   }
-  vpc_zone_identifier  = [module.networking.first_public_subnet_id,module.networking.second_public_subnet_id]
-#  health_check_type    = "EC2"
-#  desired_capacity     = 1
-#  termination_policies = [
-#    "OldestInstance"
-#  ]
-#  default_cooldown          = 30
-#  health_check_grace_period = 30
-#  lifecycle {
-#    create_before_destroy = true
-#  }
+  vpc_zone_identifier  = [module.networking.first_public_subnet_id]
 }
 
 resource "aws_ecs_capacity_provider" "capacity_provider" {
@@ -25,7 +15,7 @@ resource "aws_ecs_capacity_provider" "capacity_provider" {
 }
 
 resource "aws_ecs_cluster_capacity_providers" "capacity_provider" {
-  cluster_name       = aws_ecs_cluster.ecs_cluster.name
+  cluster_name       = aws_ecs_cluster.ecs_cluster_qa.name
   capacity_providers = [aws_ecs_capacity_provider.capacity_provider.name]
   default_capacity_provider_strategy {
     capacity_provider = aws_ecs_capacity_provider.capacity_provider.name
