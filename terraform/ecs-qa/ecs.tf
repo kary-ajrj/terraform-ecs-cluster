@@ -2,6 +2,10 @@ provider "aws" {
   region = "us-west-2"
 }
 
+data "aws_ecr_repository" "ecr_example" {
+  name = "my_terraform_ecr_example"
+}
+
 resource "aws_ecs_cluster" "ecs_cluster_qa" {
   name = "terraform-cluster"
 }
@@ -22,7 +26,7 @@ resource "aws_ecs_task_definition" "task_example_qa" {
   container_definitions = jsonencode([
     {
       name              = "hello"
-      image             = module.ecr.ecr_url
+      image             = data.aws_ecr_repository.ecr_example.repository_url
       memoryReservation = 985
       essential         = true
       portMappings      = [
