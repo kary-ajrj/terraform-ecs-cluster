@@ -2,10 +2,6 @@ provider "aws" {
   region = "us-west-2"
 }
 
-data "aws_ecr_repository" "ecr_example" {
-  name = "my_terraform_ecr_example"
-}
-
 resource "aws_ecs_cluster" "ecs_cluster_qa" {
   name = "terraform-cluster"
 }
@@ -13,12 +9,12 @@ resource "aws_ecs_cluster" "ecs_cluster_qa" {
 resource "aws_launch_template" "launch_config_qa" {
   image_id = "ami-0c6b5b7ffdb17cb99"
   iam_instance_profile {
-    name = module.networking.iam_name
+    name = data.terraform_remote_state.network.outputs.iam_name
   }
-  vpc_security_group_ids = [module.networking.security_group_id]
+  vpc_security_group_ids = [data.terraform_remote_state.network.outputs.security_group_id]
   instance_type          = "t2.micro"
   key_name               = "ecs-ec2-key-pair"
-  user_data              = filebase64("user-data.sh")
+  user_data              = filebase64("../user-data.sh")
 }
 
 resource "aws_ecs_task_definition" "task_example_qa" {
@@ -42,7 +38,7 @@ resource "aws_ecs_task_definition" "task_example_qa" {
 }
 
 resource "aws_ecs_service" "service_example_qa" {
-  name                  = "ecs-service"
+  name                  = "ecs-service-qa"
   cluster               = aws_ecs_cluster.ecs_cluster_qa.id
   task_definition       = aws_ecs_task_definition.task_example_qa.arn
   launch_type           = "EC2"
@@ -54,7 +50,7 @@ resource "aws_ecs_service" "service_example_qa" {
     target_group_arn = aws_lb_target_group.ecs_alb_target_group_qa.arn
   }
   network_configuration {
-    subnets         = [module.networking.first_public_subnet_id]
-    security_groups = [module.networking.security_group_id]
+    subnets         = [data.terraform_remote_state.network.outputs.first_public_subnet_id]
+    security_groups = [data.terraform_remote_state.network.outputs.security_group_id]
   }
 }

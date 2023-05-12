@@ -13,7 +13,6 @@ jobs:
   terraform:
     name: 'Terraform'
     runs-on: ubuntu-latest
-    environment: qa
 
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
@@ -36,11 +35,11 @@ jobs:
 
     - name: Terraform Init
       run: |
-        cd terraform/ecs-qa
+        cd terraform/qa/network
         terraform init
 
     - name: Terraform Apply
 #      if: github.ref == 'refs/heads/"main"' && github.event_name == 'push'
       run: |
-        cd terraform/ecs-qa
+        cd terraform/qa/network
         terraform apply -auto-approve -input=false
