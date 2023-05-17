@@ -1,0 +1,45 @@
+name: 'Terraform'
+on: workflow_dispatch
+#on:
+#  push:
+#    branches: [ "main" ]
+#  pull_request:
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  terraform:
+    name: 'Terraform'
+    runs-on: ubuntu-latest
+
+    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v2
+      with:
+        aws-region: us-west-2
+        role-to-assume: arn:aws:iam::675220158921:role/github-oidc
+        role-session-name: MySessionName
+
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v2
+
+    - name: Terraform Init
+      run: |
+        cd terraform/qa/my-ecs-service
+        terraform init
+
+    - name: Terraform Apply
+#      if: github.ref == 'refs/heads/"main"' && github.event_name == 'push'
+      run: |
+        cd terraform/qa/my-ecs-service
+        terraform apply -auto-approve -input=false

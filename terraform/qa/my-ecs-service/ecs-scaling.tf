@@ -15,7 +15,7 @@ resource "aws_ecs_capacity_provider" "capacity_provider_qa" {
 }
 
 resource "aws_ecs_cluster_capacity_providers" "capacity_provider_qa" {
-  cluster_name       = aws_ecs_cluster.ecs_cluster_qa.name
+  cluster_name       = data.terraform_remote_state.ecsCluster.outputs.ecs_cluster_name
   capacity_providers = [aws_ecs_capacity_provider.capacity_provider_qa.name]
   default_capacity_provider_strategy {
     capacity_provider = aws_ecs_capacity_provider.capacity_provider_qa.name

@@ -1,3 +1,11 @@
+provider "aws" {
+  region = "us-west-2"
+}
+
+resource "aws_ecs_cluster" "ecs_cluster_qa" {
+  name = "terraform-cluster"
+}
+
 resource "aws_lb" "ecs_alb_qa" {
   name            = "ecs-alb-qa"
   security_groups = [aws_security_group.alb_security_group_qa.id]

@@ -2,10 +2,6 @@ provider "aws" {
   region = "us-west-2"
 }
 
-resource "aws_ecs_cluster" "ecs_cluster_qa" {
-  name = "terraform-cluster"
-}
-
 resource "aws_launch_template" "launch_config_qa" {
   image_id = "ami-0c6b5b7ffdb17cb99"
   iam_instance_profile {
@@ -39,7 +35,7 @@ resource "aws_ecs_task_definition" "task_example_qa" {
 
 resource "aws_ecs_service" "service_example_qa" {
   name                  = "ecs-service-qa"
-  cluster               = aws_ecs_cluster.ecs_cluster_qa.id
+  cluster               = data.terraform_remote_state.ecsCluster.outputs.ecs_cluster_id
   task_definition       = aws_ecs_task_definition.task_example_qa.arn
   launch_type           = "EC2"
   desired_count         = 1
@@ -47,7 +43,7 @@ resource "aws_ecs_service" "service_example_qa" {
   load_balancer {
     container_name   = "hello"
     container_port   = 3000
-    target_group_arn = aws_lb_target_group.ecs_alb_target_group_qa.arn
+    target_group_arn = data.terraform_remote_state.ecsCluster.outputs.ecs_alb_target_group
   }
   network_configuration {
     subnets         = [data.terraform_remote_state.network.outputs.first_public_subnet_id]

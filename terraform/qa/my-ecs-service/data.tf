@@ -10,3 +10,12 @@ data "terraform_remote_state" "network" {
     region = "us-west-2"
   }
 }
+
+data "terraform_remote_state" "ecsCluster" {
+  backend = "s3"
+  config  = {
+    bucket = "my-infrastructure-state"
+    key    = "qa-ecs-cluster-terraform-state"
+    region = "us-west-2"
+  }
+}
