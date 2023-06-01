@@ -1,8 +1,4 @@
-provider "aws" {
-  region = "us-west-2"
-}
-
-resource "aws_ecs_task_definition" "task_example_qa" {
+resource "aws_ecs_task_definition" "task_example" {
   family                = "service"
   container_definitions = jsonencode([
     {
@@ -22,20 +18,20 @@ resource "aws_ecs_task_definition" "task_example_qa" {
   network_mode             = "awsvpc"
 }
 
-resource "aws_ecs_service" "service_example_qa" {
+resource "aws_ecs_service" "service_example" {
   name                  = "ecs-service-qa"
-  cluster               = data.terraform_remote_state.ecsCluster.outputs.ecs_cluster_id
-  task_definition       = aws_ecs_task_definition.task_example_qa.arn
+  cluster               = var.ecs_cluster_id
+  task_definition       = aws_ecs_task_definition.task_example.arn
   launch_type           = "EC2"
   desired_count         = 1
   wait_for_steady_state = true
   load_balancer {
     container_name   = "hello"
     container_port   = 3000
-    target_group_arn = data.terraform_remote_state.ecsCluster.outputs.ecs_alb_target_group
+    target_group_arn = var.ecs_alb_tg_arn
   }
   network_configuration {
-    subnets         = [data.terraform_remote_state.network.outputs.first_public_subnet_id]
-    security_groups = [data.terraform_remote_state.network.outputs.security_group_id]
+    subnets         = [var.first_public_subnet_id]
+    security_groups = [var.security_group_id]
   }
 }
