@@ -36,12 +36,8 @@ jobs:
     - name: Initialise Terraform
       run: |
         cd terraform/environments/prod
-        terraform init
-
-    - name: Select Terraform workspace
-      run: |
-        cd terraform/environments/prod
         terraform workspace new prod
+        terraform init
 
     - name: Apply Terraform changes
 #      if: github.ref == 'refs/heads/"main"' && github.event_name == 'push'
