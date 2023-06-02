@@ -19,7 +19,7 @@ resource "aws_ecs_task_definition" "task_example" {
 }
 
 resource "aws_ecs_service" "service_example" {
-  name                  = "ecs-service-qa"
+  name                  = "ecs-service-${terraform.workspace}"
   cluster               = var.ecs_cluster_id
   task_definition       = aws_ecs_task_definition.task_example.arn
   launch_type           = "EC2"

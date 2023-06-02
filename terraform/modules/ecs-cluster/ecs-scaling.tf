@@ -27,7 +27,7 @@ resource "aws_ecs_capacity_provider" "capacity_provider" {
   }
 }
 
-resource "aws_ecs_cluster_capacity_providers" "capacity_provider_qa" {
+resource "aws_ecs_cluster_capacity_providers" "capacity_provider" {
   cluster_name       = aws_ecs_cluster.ecs_cluster.name
   capacity_providers = [aws_ecs_capacity_provider.capacity_provider.name]
   default_capacity_provider_strategy {
