@@ -23,7 +23,7 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3
 
-    - name: Configure AWS Credentials
+    - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v2
       with:
         aws-region: us-west-2
@@ -33,12 +33,15 @@ jobs:
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v2
 
-    - name: Terraform Init
+    - name: Initialise Terraform
       run: |
         cd terraform/modules/environments/prod
         terraform init
 
-    - name: Terraform Apply
+    - name: Terraform workspace
+      run: terraform workspace new prod
+
+    - name: Apply Terraform changes
 #      if: github.ref == 'refs/heads/"main"' && github.event_name == 'push'
       run: |
         cd terraform/modules/environments/prod
