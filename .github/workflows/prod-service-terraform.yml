@@ -39,7 +39,7 @@ jobs:
         terraform init
 
     - name: Select Terraform workspace
-      run: terraform workspace select prod
+      run: terraform workspace new prod
 
     - name: Apply Terraform changes
 #      if: github.ref == 'refs/heads/"main"' && github.event_name == 'push'
