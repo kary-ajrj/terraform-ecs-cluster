@@ -39,7 +39,9 @@ jobs:
         terraform init
 
     - name: Terraform workspace
-      run: terraform workspace new qa
+      run: |
+        cd terraform/modules/environments/qa
+        terraform workspace new qa
 
     - name: Apply Terraform changes
 #      if: github.ref == 'refs/heads/"main"' && github.event_name == 'push'
