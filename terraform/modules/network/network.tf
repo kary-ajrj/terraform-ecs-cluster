@@ -11,7 +11,7 @@ resource "aws_subnet" "ecs_public_subnet_one" {
   cidr_block              = var.subnet_one_cidr
   availability_zone       = "us-west-2a"
   map_public_ip_on_launch = true
-  tags                 = {
+  tags                    = {
     Name = "subnet-one-${terraform.workspace}"
   }
 }
@@ -21,14 +21,14 @@ resource "aws_subnet" "ecs_public_subnet_two" {
   cidr_block              = var.subnet_two_cidr
   availability_zone       = "us-west-2b"
   map_public_ip_on_launch = true
-  tags                 = {
+  tags                    = {
     Name = "subnet-two-${terraform.workspace}"
   }
 }
 
 resource "aws_internet_gateway" "IG" {
   vpc_id = aws_vpc.ecs_vpc.id
-  tags                 = {
+  tags   = {
     Name = "internet-gateway-${terraform.workspace}"
   }
 }
@@ -39,7 +39,7 @@ resource "aws_route_table" "routeTable" {
     cidr_block = "0.0.0.0/0"
     gateway_id = aws_internet_gateway.IG.id
   }
-  tags                 = {
+  tags = {
     Name = "route-table-${terraform.workspace}"
   }
 }
@@ -57,10 +57,10 @@ resource "aws_route_table_association" "secondRouteTableAssociation" {
 resource "aws_security_group" "ecs_security_group" {
   vpc_id = aws_vpc.ecs_vpc.id
   ingress {
-    from_port   = 3000
-    protocol    = "tcp"
-    to_port     = 3000
-    cidr_blocks = ["0.0.0.0/0"]
+    from_port       = 0
+    protocol        = "-1"
+    to_port         = 0
+    security_groups = [aws_security_group.alb_security_group.id]
   }
 
   egress {
@@ -69,7 +69,26 @@ resource "aws_security_group" "ecs_security_group" {
     to_port     = 0
     cidr_blocks = ["0.0.0.0/0"]
   }
-  tags                 = {
+  tags = {
     Name = "security-group-${terraform.workspace}"
+  }
+}
+
+resource "aws_security_group" "alb_security_group" {
+  vpc_id = aws_vpc.ecs_vpc.id
+  ingress {
+    from_port   = 3000
+    protocol    = "tcp"
+    to_port     = 3000
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  egress {
+    from_port   = 0
+    protocol    = "-1"
+    to_port     = 0
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  tags = {
+    Name = "lb-listener-${terraform.workspace}"
   }
 }

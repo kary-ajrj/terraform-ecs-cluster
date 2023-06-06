@@ -27,5 +27,6 @@ module "ecs-cluster" {
   first_public_subnet_id  = module.network.first_public_subnet_id
   second_public_subnet_id = module.network.second_public_subnet_id
   iam_name                = module.network.iam_name
-  security_group_id       = module.network.security_group_id
+  ecs_security_group_id   = module.network.ecs_security_group_id
+  alb_security_group_id   = module.network.alb_security_group_id
 }

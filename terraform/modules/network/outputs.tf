@@ -10,8 +10,12 @@ output "second_public_subnet_id" {
   value = aws_subnet.ecs_public_subnet_two.id
 }
 
-output "security_group_id" {
+output "ecs_security_group_id" {
   value = aws_security_group.ecs_security_group.id
+}
+
+output "alb_security_group_id" {
+  value = aws_security_group.alb_security_group.id
 }
 
 output "iam_name" {

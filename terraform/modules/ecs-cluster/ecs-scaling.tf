@@ -3,7 +3,7 @@ resource "aws_launch_template" "launch_config" {
   iam_instance_profile {
     name = var.iam_name
   }
-  vpc_security_group_ids = [var.security_group_id]
+  vpc_security_group_ids = [var.ecs_security_group_id]
   instance_type          = var.instance_type
   key_name               = "ecs-ec2-key-pair"
   user_data              = filebase64("user-data.sh")

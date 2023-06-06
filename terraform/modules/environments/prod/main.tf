@@ -20,13 +20,14 @@ module "network" {
 }
 
 module "ecs-cluster" {
-  source        = "../../ecs-cluster"
-  instance_type = local.instance_type
-  asg_max_size  = local.asg_max_size
-  asg_min_size  = local.asg_min_size
+  source                  = "../../ecs-cluster"
+  instance_type           = local.instance_type
+  asg_max_size            = local.asg_max_size
+  asg_min_size            = local.asg_min_size
   vpc_id                  = module.network.vpc_id
   first_public_subnet_id  = module.network.first_public_subnet_id
   second_public_subnet_id = module.network.second_public_subnet_id
   iam_name                = module.network.iam_name
-  security_group_id       = module.network.security_group_id
+  ecs_security_group_id   = module.network.ecs_security_group_id
+  alb_security_group_id   = module.network.alb_security_group_id
 }

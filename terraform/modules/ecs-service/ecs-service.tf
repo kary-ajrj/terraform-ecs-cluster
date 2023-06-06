@@ -32,6 +32,6 @@ resource "aws_ecs_service" "service_example" {
   }
   network_configuration {
     subnets         = [var.first_public_subnet_id]
-    security_groups = [var.security_group_id]
+    security_groups = [var.ecs_security_group_id]
   }
 }
