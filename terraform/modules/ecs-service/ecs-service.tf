@@ -31,7 +31,7 @@ resource "aws_ecs_service" "service_example" {
     target_group_arn = var.ecs_alb_tg_arn
   }
   network_configuration {
-    subnets         = [var.first_public_subnet_id]
+    subnets         = [var.first_pvt_subnet_id, var.second_pvt_subnet_id]
     security_groups = [var.ecs_security_group_id]
   }
 }

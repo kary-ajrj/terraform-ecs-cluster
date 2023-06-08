@@ -1,5 +1,9 @@
-output "first_public_subnet_id" {
-  value = module.network.first_public_subnet_id
+output "first_pvt_subnet_id" {
+  value = module.network.first_pvt_subnet_id
+}
+
+output "second_pvt_subnet_id" {
+  value = module.network.second_pvt_subnet_id
 }
 
 output "ecs_security_group_id" {

@@ -12,7 +12,7 @@ resource "aws_subnet" "ecs_public_subnet_one" {
   availability_zone       = "us-west-2a"
   map_public_ip_on_launch = true
   tags                    = {
-    Name = "subnet-one-${terraform.workspace}"
+    Name = "public-subnet-one-${terraform.workspace}"
   }
 }
 
@@ -22,7 +22,25 @@ resource "aws_subnet" "ecs_public_subnet_two" {
   availability_zone       = "us-west-2b"
   map_public_ip_on_launch = true
   tags                    = {
-    Name = "subnet-two-${terraform.workspace}"
+    Name = "public-subnet-two-${terraform.workspace}"
+  }
+}
+
+resource "aws_subnet" "ecs_private_subnet_one" {
+  vpc_id                  = aws_vpc.ecs_vpc.id
+  cidr_block              = var.pvt_subnet_one_cidr
+  availability_zone       = "us-west-2a"
+  tags                    = {
+    Name = "private-subnet-one-${terraform.workspace}"
+  }
+}
+
+resource "aws_subnet" "ecs_private_subnet_two" {
+  vpc_id                  = aws_vpc.ecs_vpc.id
+  cidr_block              = var.pvt_subnet_two_cidr
+  availability_zone       = "us-west-2b"
+  tags                    = {
+    Name = "private-subnet-two-${terraform.workspace}"
   }
 }
 

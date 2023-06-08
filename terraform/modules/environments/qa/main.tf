@@ -3,19 +3,23 @@ provider "aws" {
 }
 
 locals {
-  vpc_cidr        = "10.0.0.0/16"
-  subnet_one_cidr = "10.0.1.0/24"
-  subnet_two_cidr = "10.0.2.0/24"
-  instance_type   = "t2.micro"
-  asg_max_size    = 1
-  asg_min_size    = 1
+  vpc_cidr            = "10.0.0.0/16"
+  subnet_one_cidr     = "10.0.1.0/24"
+  subnet_two_cidr     = "10.0.2.0/24"
+  pvt_subnet_one_cidr = "10.0.3.0/24"
+  pvt_subnet_two_cidr = "10.0.4.0/24"
+  instance_type       = "t2.micro"
+  asg_max_size        = 1
+  asg_min_size        = 1
 }
 
 module "network" {
-  source          = "../../network"
-  vpc_cidr        = local.vpc_cidr
-  subnet_one_cidr = local.subnet_one_cidr
-  subnet_two_cidr = local.subnet_two_cidr
+  source              = "../../network"
+  vpc_cidr            = local.vpc_cidr
+  subnet_one_cidr     = local.subnet_one_cidr
+  subnet_two_cidr     = local.subnet_two_cidr
+  pvt_subnet_one_cidr = local.pvt_subnet_one_cidr
+  pvt_subnet_two_cidr = local.pvt_subnet_two_cidr
 }
 
 module "ecs-cluster" {

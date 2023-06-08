@@ -10,6 +10,14 @@ output "second_public_subnet_id" {
   value = aws_subnet.ecs_public_subnet_two.id
 }
 
+output "first_pvt_subnet_id" {
+  value = aws_subnet.ecs_private_subnet_one.id
+}
+
+output "second_pvt_subnet_id" {
+  value = aws_subnet.ecs_private_subnet_two.id
+}
+
 output "ecs_security_group_id" {
   value = aws_security_group.ecs_security_group.id
 }

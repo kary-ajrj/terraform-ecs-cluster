@@ -17,7 +17,7 @@ resource "aws_autoscaling_group" "auto_scale" {
   launch_template {
     id = aws_launch_template.launch_config.id
   }
-  vpc_zone_identifier = [var.first_public_subnet_id]
+  vpc_zone_identifier = [var.first_public_subnet_id, var.second_public_subnet_id]
 }
 
 resource "aws_ecs_capacity_provider" "capacity_provider" {

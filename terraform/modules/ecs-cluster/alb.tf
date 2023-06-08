@@ -1,12 +1,16 @@
 resource "aws_ecs_cluster" "ecs_cluster" {
   name = "terraform-cluster-${terraform.workspace}"
+  setting {
+    name  = "containerInsights"
+    value = "enabled"
+  }
 }
 
 resource "aws_lb" "ecs_alb" {
   name                       = "ecs-alb-${terraform.workspace}"
   security_groups            = [var.alb_security_group_id]
   drop_invalid_header_fields = true
-  subnets                    = [
+  subnets = [
     var.first_public_subnet_id,
     var.second_public_subnet_id
   ]
