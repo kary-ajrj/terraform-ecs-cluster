@@ -6,4 +6,4 @@
 - Terraform workspaces are being leveraged.
 - It has Github Action pipelines that deploys QA and Production infra/service (manually).
 - The modules can be parameterised further if needed.
-Note: ECR was created manually.
+Note: ECR and S3 were created manually.
