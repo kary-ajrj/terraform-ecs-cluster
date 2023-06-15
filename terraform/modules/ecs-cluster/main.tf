@@ -7,7 +7,7 @@ resource "aws_ecs_cluster" "ecs_cluster" {
 }
 
 resource "aws_launch_template" "launch_config" {
-  image_id = "ami-0c6b5b7ffdb17cb99"
+  image_id = "ami-036f51d99e53d0c67"
   iam_instance_profile {
     name = var.iam_name
   }
