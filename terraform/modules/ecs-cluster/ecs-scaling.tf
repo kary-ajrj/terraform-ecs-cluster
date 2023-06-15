@@ -1,9 +1,9 @@
 resource "aws_autoscaling_group" "auto_scale" {
-  name             = "asg-${terraform.workspace}"
-  max_size         = var.asg_max_size
-  min_size         = var.asg_min_size
-  desired_capacity = var.asg_desired_capacity
-
+  name                  = "asg-${terraform.workspace}"
+  max_size              = var.asg_max_size
+  min_size              = var.asg_min_size
+  desired_capacity      = var.asg_desired_capacity
+  protect_from_scale_in = true
   launch_template {
     id = aws_launch_template.launch_config.id
   }
