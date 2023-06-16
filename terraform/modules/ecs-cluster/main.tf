@@ -13,7 +13,6 @@ resource "aws_launch_template" "launch_config" {
   }
   vpc_security_group_ids = [var.ecs_security_group_id]
   instance_type          = var.instance_type
-  key_name               = "ecs-ec2-key-pair"
   user_data              = filebase64("user-data.sh")
   name                   = "launch-template-${terraform.workspace}"
 }
