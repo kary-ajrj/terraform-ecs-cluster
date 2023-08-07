@@ -1,9 +1,9 @@
 resource "aws_ecs_cluster" "ecs_cluster" {
   name = "terraform-cluster-${terraform.workspace}"
-  setting {
+  /*setting {
     name  = "containerInsights"
     value = "enabled"
-  }
+  }*/
 }
 
 resource "aws_launch_template" "launch_config" {
